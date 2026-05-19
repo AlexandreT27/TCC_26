@@ -15,7 +15,6 @@ CREATE TABLE usuarios (
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
-
 -- TABELAS GRÁFICOS FINANCEIROS (Sem Transações)
 
 -- Tabela para Gráficos (Distribuição de Orçamento Planejado)
@@ -38,8 +37,6 @@ CREATE TABLE metas_financeiras (
     data_alvo DATE NOT NULL, -- Prazo final da meta
     FOREIGN KEY (fk_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 ) ENGINE=InnoDB;
-
-
 
 -- ESTRUTURA DE CURSOS, MÓDULOS E AULAS
 
@@ -94,7 +91,6 @@ CREATE TABLE progresso_aulas (
     FOREIGN KEY (fk_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
     FOREIGN KEY (fk_aula) REFERENCES aulas(id_aula) ON DELETE CASCADE
 ) ENGINE=InnoDB;
-
 
 -- SISTEMA DE MEDALHAS
 
