@@ -1,0 +1,290 @@
+<?php
+$nomeUsuario = "Bernardo Pires"; 
+?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METAL Financeiro - Dashboard PHP</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #ffffff;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            width: 280px;
+            background-color: #dcdcdc;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+            position: relative;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        }
+
+        .menu-toggle {
+            padding-left: 20px;
+            font-size: 24px;
+            color: #555;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .profile-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .avatar-placeholder {
+            font-size: 80px;
+            color: #002060;
+            margin-bottom: 10px;
+        }
+
+        .username {
+            color: #c59b27;
+            font-size: 20px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        .nav-menu {
+            list-style: none;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 12px 25px;
+            color: #002060;
+            text-decoration: none;
+            font-weight: bold;
+            font-style: italic;
+            font-size: 18px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-item a:hover {
+            background-color: rgba(0, 32, 96, 0.05);
+        }
+
+        .nav-item.active {
+            background-color: #cbdfff;
+            border-left: 6px solid #002060;
+        }
+        
+        .nav-item.active a {
+            padding-left: 19px;
+        }
+
+        .btn-sair {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ffffff;
+            color: #c59b27;
+            border: 1px solid #e0e0e0;
+            padding: 8px 35px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: background 0.2s;
+        }
+
+        /* --- CONTEÚDO PRINCIPAL --- */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 40px;
+            overflow-y: auto;
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #002060;
+        }
+
+        .logo span {
+            color: #c59b27;
+            font-style: italic;
+            font-weight: normal;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 40px 10px 20px;
+            border: 2px solid #c59b27;
+            border-radius: 25px;
+            outline: none;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #555;
+            font-size: 18px;
+        }
+
+        .cards-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .cards-row-top {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .cards-row-bottom {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: #ededed;
+            width: 260px;
+            height: 180px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .card i {
+            font-size: 55px;
+            color: #c59b27;
+        }
+
+        .card span {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        
+        <div class="profile-container">
+            <div class="avatar-placeholder">
+                <i class="fa-solid fa-circle-user"></i>
+            </div>
+            <div class="username"><?php echo htmlspecialchars($nomeUsuario); ?></div>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="#">Conta</a></li>
+            <li class="nav-item"><a href="#">Editar perfil</a></li>
+            <li class="nav-item"><a href="#">Configuração</a></li>
+            <li class="nav-item active"><a href="#">Gráficos</a></li>
+            <li class="nav-item"><a href="#">Notas</a></li>
+            <li class="nav-item"><a href="#">Cursos</a></li>
+            <li class="nav-item"><a href="#">Metas</a></li>
+            <li class="nav-item"><a href="#">Mudar de conta</a></li>
+        </ul>
+
+        <button class="btn-sair">Sair</button>
+    </aside>
+
+    <main class="main-content">
+        
+        <div class="header-top">
+            <div class="logo">METAL<span>Financeiro</span></div>
+        </div>
+
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" placeholder="Pesquisa">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+        </div>
+
+        <div class="cards-wrapper">
+            
+            <div class="cards-row-top">
+                <div class="card">
+                    <i class="fa-solid fa-chart-column"></i>
+                    <span>Metas</span>
+                </div>
+            </div>
+
+            <div class="cards-row-bottom">
+                <div class="card">
+                    <i class="fa-solid fa-video"></i>
+                    <span>Tutoriais</span>
+                </div>
+                <div class="card">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Calculos</span>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>
