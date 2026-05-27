@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="cadastroStyle.css">
+    <title>Cadastro - Metal Financeiro</title>
+</head>
+<body>
+
+<div class="container">
+    <h2>METAL Financeiro</h2>
+    <h1>Cadastro</h1>
+
+    <form action="cadastro.php" method="POST">
+        <input type="text" name="nome" placeholder="Nome" required>
+        <input type="text" name="sobrenome" placeholder="Sobrenome" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="senha" placeholder="Senha" required>
+        <input type="text" name="numero" placeholder="Número" required>
+
+        <div class="row">
+            <input type="date" name="data" required>
+            <select name="genero" required>
+                <option value="">Gênero</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+                <option value="Outro">Outro</option>
+            </select>
+        </div>
+
+        <div class="row">
+            <input type="text" name="cidade" placeholder="Cidade" required>
+            <input type="text" name="estado" placeholder="Estado" required>
+        </div>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+</div>
+
+</body>
+</html>

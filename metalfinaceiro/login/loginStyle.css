@@ -1,0 +1,117 @@
+*{
+   margin:0;
+   padding:0;
+   box-sizing:border-box;
+   font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f2f2f2;
+}
+
+.container{
+            width:380px;
+            background:#fff;
+            padding:40px 30px;
+            border-radius:20px;
+            box-shadow:0 5px 20px rgba(0,0,0,0.1);
+            text-align:center;
+        }
+
+.container h1{
+               color:#2f5cff;
+               margin-bottom:15px;
+               font-size:42px;
+              }
+
+.container p{
+             margin-bottom:20px;
+             color:#444;
+            }
+
+.container span{
+                color:#ffb400;
+                font-weight:bold;
+                }
+
+.titulo-login{
+              color:#ffb400;
+              margin-bottom:20px;
+              font-size:35px;
+             }
+
+.input-box{
+            display:flex;
+            margin-bottom:15px;
+          }
+
+.icon{
+       width:50px;
+       background:#1f2a7c;
+       color:#fff;
+       display:flex;
+       justify-content:center;
+       align-items:center;
+       border-radius:10px 0 0 10px;
+       font-size:20px;
+     }
+
+.input-box input{
+                  width:100%;
+                  padding:15px;
+                  border:2px solid #ccc;
+                  border-left:none;
+                  border-radius:0 10px 10px 0;
+                  outline:none;
+                  font-size:16px;
+                }
+
+.forgot{
+         margin:10px 0 20px;
+         font-size:14px;
+        }
+
+.forgot a{
+           text-decoration:none;
+           color:#000;
+         }
+
+button{
+        width:100%;
+        padding:15px;
+        border:none;
+        border-radius:30px;
+        background:#ffbf00;
+        color:#000;
+        font-size:20px;
+        cursor:pointer;
+        transition:0.3s;
+        font-weight:bold;
+      }
+
+button:hover{
+              background:#e6aa00;
+            }
+
+.cadastro{
+           margin-top:20px;
+           font-size:15px;
+         }
+
+.cadastro a{
+            color:#2f5cff;
+            text-decoration:none;
+            font-weight:bold;
+           }
+
+.erro{
+       background:#ffdddd;
+       color:#b30000;
+       padding:10px;
+       border-radius:8px;
+       margin-bottom:15px;
+     }

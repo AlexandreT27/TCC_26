@@ -1,0 +1,65 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="loginStyle.css">
+    <title>Login</title>
+
+    </head>
+<body>
+
+    <div class="container">
+
+        <h1>Bem-vindo</h1>
+
+        <p>Entra para ver o seu <span>tesouro!</span></p>
+
+        <h2 class="titulo">LOGIN</h2>
+
+
+        <form method="POST">
+
+            <div class="input-box">
+                <div class="icon">👤</div>
+
+                <input 
+                    type="text" 
+                    name="usuario" 
+                    placeholder="nome de usuário ou email"
+                    required
+                >
+            </div>
+
+            <div class="input-box">
+                <div class="icon">🔑</div>
+
+                <input 
+                    type="password" 
+                    name="senha" 
+                    placeholder="sua senha"
+                    required
+                >
+            </div>
+
+            <div class="forgot">
+                <a href="#">Esqueci minha senha</a>
+            </div>
+
+            <button type="submit">
+                ENTRAR
+            </button>
+
+        </form>
+
+        <div class="cadastro">
+            Ainda não tem conta?
+            <a href="../cadastro/cadastro.html">Cadastre-se</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
