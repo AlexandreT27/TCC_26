@@ -1,0 +1,997 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Barlow:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+
+/* Remove margens e paddings padrões do navegador */
+* { 
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; /* Faz largura incluir padding e borda */
+}
+
+/* Variáveis globais de cores */
+:root {
+  --navy: #002060;          /* Azul marinho */
+  --gold: #c59b27;          /* Dourado principal */
+  --gold-light: #e0b840;    /* Dourado claro */
+  --silver: #dcdcdc;        /* Prata claro */
+  --silver-dark: #b0b0b0;   /* Prata escuro */
+  --black: #000000;         /* Preto */
+  --dark: #0d0d0d;          /* Fundo escuro */
+  --dark2: #1a1a1a;         /* Fundo secundário */
+  --dark3: #242424;         /* Fundo terciário */
+  --dark4: #2e2e2e;         /* Bordas escuras */
+  --text-light: #cccccc;    /* Texto claro */
+  --text-muted: #777777;    /* Texto apagado */
+  --green: #4caf50;         /* Verde sucesso */
+  --red: #e24b4a;           /* Vermelho erro */
+  --yellow: #FFDE21;        /* Amarelo */
+}
+
+/* Corpo principal da página */
+body {
+  display: flex;               /* Organiza sidebar e conteúdo lado a lado */
+  background: var(--silver);   /* Fundo cinza claro */
+  height: 100vh;               /* Altura total da tela */
+  overflow: hidden;            /* Remove scroll externo */
+  font-family: sans-serif;     /* Fonte padrão */
+}
+
+/* ===== SIDEBAR ===== */
+
+/* Menu lateral */
+.sidebar {
+  width: 250px;                      /* Largura fixa */
+  min-width: 250px;                  /* Largura mínima */
+  background: var(--text-light);     /* Cor de fundo */
+  display: flex;                     /* Layout flexível */
+  flex-direction: column;            /* Organiza itens verticalmente */
+  padding: 20px 0 28px;              /* Espaçamento interno */
+  position: relative;                /* Permite posicionamento interno */
+  transition: width 0.2s ease, min-width 0.2s ease;    /* Anima abertura/fechamento */
+  z-index: 10;                        /* Mantém acima do conteúdo */
+}
+
+/* Sidebar recolhida */
+.sidebar.collapsed { 
+  width: 60px;       /* Reduz largura */
+  min-width: 60px;   /* Reduz largura mínima */
+}
+
+/* Esconde elementos quando recolhida */
+.sidebar.collapsed .profile-container,
+.sidebar.collapsed .nav-label,
+.sidebar.collapsed .btn-sair-label { 
+  display: none;   /* Esconde elementos */
+}
+
+/* Centraliza ícones no menu recolhido */
+.sidebar.collapsed .nav-item a { 
+  justify-content: center;   /* Centraliza conteúdo */
+  padding: 13px 0;           /* Ajusta padding */
+}
+
+/* Ajusta botão sair recolhido */
+.sidebar.collapsed .btn-sair { 
+  padding: 8px 0;            /* Ajusta padding */
+  width: 42px;               /* Largura reduzida */
+  justify-content: center;   /* Centraliza conteúdo */
+}
+
+
+/* Botão hamburguer/menu */
+.menu-toggle {
+  padding: 0 0 0 20px;  /* Espaçamento esquerdo */
+  font-size: 25px;      /* Tamanho do ícone */
+  color: #555;        /* Cor */
+  cursor: pointer;      /* Mãozinha */
+  margin-bottom: 14px;  /* Espaço inferior */
+  display: flex;        /* Layout flexível */
+  align-items: center;  /* Alinhamento vertical */
+}
+
+/* Área do perfil */
+.profile-container {
+  text-align: center;     /* Centraliza conteúdo */
+  margin-bottom: 24px;    /* Espaço inferior */
+  padding: 0 14px;        /* Espaçamento interno */
+  overflow: hidden;       /* Esconde excesso */ 
+}
+
+/* Avatar padrão */
+.avatar-placeholder {
+  font-size: 72px;       /* Tamanho do ícone */
+  color: var(--navy);    /* Cor */
+  line-height: 1;        /* Altura da linha */
+  margin-bottom: 8px;    /* Espaço inferior */
+}
+
+/* Nome do usuário */
+.username {
+  color: var(--gold);        /* Cor do texto */
+  font-size: 20px;           /* Tamanho da fonte */
+  font-weight: 700;          /* Negrito */
+  font-style: italic;        /* Itálico */
+  white-space: nowrap;       /* Não quebra linha */
+  overflow: hidden;          /* Esconde excesso */
+  text-overflow: ellipsis;   /* Adiciona "..." se texto grande */
+}
+
+/* Lista de navegação */
+.nav-menu {
+  list-style: none;        /* Remove bolinhas */
+  display: flex;
+  flex-direction: column;  /* Elementos em coluna */
+  gap: 2px;                /* Espaço entre os itens do flex */
+  flex: 1;                 /* Ocupa espaço restante */
+}
+
+/* Links do menu */
+.nav-item a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 22px;
+  color: var(--navy);
+  text-decoration: none;         /* Remove sublinhado */
+  font-weight: 700;
+  font-style: italic;
+  font-size: 16px;               /* Tamanho da fonte */
+  cursor: pointer;               /* Cursor clicável */
+  transition: background 0.15s;  /* Anima hover */
+}
+
+/* Ícones do menu */
+.nav-item a i {
+  font-size: 20px;       /* Tamanho do ícone */
+  flex-shrink: 0;        /* Impede encolher */
+  width: 25px;
+  text-align: center;
+}
+
+/* Hover do menu */
+.nav-item a:hover {
+  background: rgba(0,32,96,0.07);   /* Fundo suave */
+}
+
+/* Item ativo do menu */
+.nav-item.active {
+  background: #cbdfff;
+  border-left: 8px solid var(--navy);  /* Barra lateral */
+}
+
+/* Ajusta alinhamento do item ativo */
+.nav-item.active a {
+  padding-left: 20px;
+}
+
+/* Botão sair */
+.btn-sair {
+  margin: 18px auto 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--gold);
+  border: 1px solid #dcdcdc;
+  padding: 8px 30px;
+  border-radius: 10px;     /* Bordas arredondadas */
+  font-weight: 700;
+  font-size: 15px;
+  font-family: 'Barlow', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+/* Hover botão sair */
+.btn-sair:hover {
+  background: #f5f5f5;
+}
+
+/* ===== MAIN ===== */
+
+/* Conteúdo principal */
+.main-content {
+  flex: 1;       /* Ocupa espaço restante */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--silver);
+}
+
+/* Cabeçalho superior */
+.header-top {
+  display: flex;
+  justify-content: space-between;   /* Espaço entre logo e ícones */
+  align-items: center;
+  padding: 20px 36px 14px;
+  flex-shrink: 0;                   /* Impede encolhimento */
+}
+
+/* Logo */
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--navy);
+  padding: 5px 16px;
+  letter-spacing: 1px;  /* Espaçamento entre letras */
+}
+
+/* Parte destacada do logo */
+.logo span {
+  color: var(--gold);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* Container dos ícones do topo */
+.header-icons {
+  display:flex;
+  gap: 10px;      /* Espaço entre ícones */
+}
+
+/* Botões circulares */
+.icon-btn {
+  width: 38px;          /* Largura */
+  height: 38px;         /* Altura */
+  border-radius: 50%;   /* Deixa círculo */
+  background: var(--dark2);
+  border: 1px solid var(--text-light);
+  color: var(--gold-light);
+  font-size: 17px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  position: relative;
+}
+
+/* Hover dos botões */
+.icon-btn:hover {
+  background: var(--dark3);
+}
+
+/* Bolinha de notificação */
+.notif-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 7px;       /* Tamanho */
+  height: 7px;      /* Tamanho */
+  background: var(--gold);
+  border-radius: 50%;
+  border: 1.5px solid var(--black);
+}
+
+/* ===== PAGES ===== */
+/* Página padrão */
+.page { 
+  display: none; 
+  flex: 1; 
+  overflow-y: auto; 
+  padding: 0 36px 30px; 
+}
+
+/* Página ativa */
+.page.active { 
+  display: block;   /* Exibe página */
+}
+
+/* Scrollbar */
+.page::-webkit-scrollbar { 
+  width: 4px; 
+}
+
+/* Fundo scrollbar */
+.page::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+/* Barra scrollbar */
+.page::-webkit-scrollbar-thumb {
+  background: var(--dark4); 
+  border-radius: 100px; 
+}
+
+/* ===== DASHBOARD ===== */
+/*Caixa maior*/
+.search-container {
+  display: flex; 
+  justify-content: center; 
+  margin-bottom: 28px; 
+}
+
+/*Moldura da barra de pesquisa*/
+.search-box { 
+  position: relative; 
+  width: 100%; 
+  max-width: 440px; 
+}
+
+/*Barra de Pesquisa*/
+.search-box input {
+  width: 100%; 
+  padding: 11px 44px 11px 20px;
+  border: 2px solid var(--gold); 
+  border-radius: 25px;
+  background: var(--silver); 
+  color: var(--black);
+  font-size: 15px; 
+  font-family: 'Barlow', sans-serif;
+  outline: none; 
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Destaque visual ao clica na barra de pesquisa */
+.search-box input:focus { 
+  border-color: var(--gold-light); 
+  box-shadow: 0 0 0 3px rgba(197,155,39,0.15); 
+}
+
+/*Muda a cor do texto*/
+.search-box input::placeholder { 
+  color: #555; 
+}
+
+/*Icon da lupa*/
+.search-box i { 
+  position: absolute; 
+  right: 16px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  color: var(--gold);
+  font-size: 18px; 
+  cursor: pointer; 
+}
+
+/*Título de seção*/
+.section-title {
+  font-size: 20px;
+  font-weight: 700; 
+  letter-spacing: 2.5px;
+  color: var(--text-muted); 
+  text-transform: uppercase; 
+  margin-bottom: 16px;
+}
+
+/*Estrutura vertical centralizada que organiza os cards*/
+.cards-wrapper { 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 20px; 
+  margin-bottom: 28px; 
+}
+
+/*Alinhamento superior de cards horizontal.*/
+.cards-row-top { 
+  display: flex; 
+  justify-content: center; 
+  width: 100%; 
+}
+
+/*Alinhamento inforior de cards horizontal.*/
+.cards-row-bottom { 
+  display: flex; 
+  justify-content: center; 
+  gap: 24px; 
+  width: 100%; 
+  flex-wrap: wrap; 
+}
+
+/*Card clicável*/
+.card {
+  background: var(--dark4); 
+  border: 1px solid var(--dark4);
+  width: 220px; 
+  height: 150px; 
+  border-radius: 14px;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+  justify-content: center; 
+  gap: 12px; 
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  position: relative; 
+  overflow: hidden;
+}
+
+/*Linha no topo do card*/
+.card::before {
+  content: ''; 
+  position: absolute; 
+  top: 0; left: 0; right: 0;
+  height: 3px; 
+  background: var(--gold-light); 
+  opacity: 0; 
+  transition: opacity 0.2s;
+}
+
+/*Card interativo ao passa o mouse*/
+.card:hover { 
+  transform: translateY(-4px); 
+  border-color: var(--gold-light); 
+  box-shadow: 0 8px 24px rgba(197,155,39,0.12); 
+}
+
+/*Uma linha aparecer suavemente no topo do card.*/
+.card:hover::before { 
+  opacity: 1; 
+}
+
+/*Define o tamanho e a cor dos ícones dentro dos cards*/
+.card i { 
+  font-size: 46px; 
+  color: var(--gold-light); 
+}
+
+/*Texto do card*/
+.card span { 
+  font-weight: 700; 
+  color: #bbb; 
+  font-size: 14px; 
+  letter-spacing: 1px; 
+  text-transform: uppercase; 
+}
+
+/*Cria uma espaçamento organizado entre os card*/
+.stats-row { 
+  display: flex; 
+  gap: 24px; 
+}
+
+/*Cria um card limpo, igual em tamanho aos outros*/
+.stat { 
+  flex: 1; 
+  background: var(--dark4); 
+  border: 1px solid var(--dark3); 
+  border-radius: 10px; 
+  padding: 16px 18px; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 4px; 
+}
+
+/*Cria o texto*/
+.stat-label { 
+  font-size: 14px; 
+  letter-spacing: 1.5px; 
+  color: var(--text-light);        
+  text-transform: uppercase;       /* Tudo em maiúsculas */
+}
+
+/*Faz o número da estatística ser o foco principal do card.*/
+.stat-value { 
+  font-size: 24px; 
+  font-weight: 800; 
+  color: var(--gold-light); 
+  font-family: 'Playfair Display', serif; 
+}
+
+/*Texto de apoio das estatísticas*/
+.stat-sub { 
+  font-size: 12px; 
+  text-align: center;
+  color: var(--silver); 
+}
+
+/*Texto aparecer como um indicador de crescimento positivo nas estatísticas*/
+.stat-up { 
+  font-size: 12px; 
+  color: var(--green); 
+}
+
+/*Texto aparecer como um indicador de desempenho negativo nas estatísticas,*/
+.stat-down { font-size: 12px; 
+  color: var(--red); 
+}
+
+/* ===== METAS ===== */
+/*Cria um cabeçalho de página organizado*/
+.page-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 24px; 
+}
+
+/*Título da página*/
+.page-header h2 { font-family: 'Playfair Display', serif; 
+  font-size: 26px; 
+  color: var(--silver); 
+}
+
+/*Destacar uma palavra ou parte do título da página*/
+.page-header h2 span { 
+  color: var(--gold); 
+  font-style: bold; 
+}
+
+/*Botão nova meta*/
+.btn-primary {
+  display: flex; 
+  align-items: center; 
+  gap: 8px;
+  background: var(--gold-light); 
+  color: var(--navy);
+  border: none; 
+  padding: 10px 22px; 
+  border-radius: 10px;
+  font-weight: 700; 
+  font-size: 14px; 
+  font-family: 'Barlow', sans-serif;
+  cursor: pointer; 
+  transition: background 0.2s, transform 0.15s;
+}
+
+/*Interação do botão */
+.btn-primary:hover { background: var(--gold); 
+  transform: translateY(-1px); 
+}
+
+/*Texto de botão*/
+.btn-primary i { 
+  font-size: 20px; 
+}
+
+/*Cria uma linha organizada de “metas”*/
+.metas-resumo { 
+  display: flex; 
+  gap: 14px; 
+  margin-bottom: 24px; 
+}
+
+/*Cria um card de resumo uniforme*/
+.resumo-card { 
+  flex: 1; 
+  background: var(--dark4); 
+  border: 1px solid var(--dark3); 
+  border-radius: 12px; 
+  padding: 18px; 
+  text-align: center; 
+}
+
+/*Valor principal do resumo*/
+.resumo-num {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--gold-light);
+  font-family: 'Playfair Display', serif; 
+}
+
+/*Texto explicativo abaixo do número*/
+.resumo-label { 
+  font-size: 12px; 
+  font-weight: 700; 
+  letter-spacing: 1.5px; 
+  color: var(--silver-dark); 
+  text-transform: uppercase;
+  margin-top: 4px; 
+}
+
+/*Cria uma lista vertical organizada de metas*/
+.metas-list { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 16px; 
+}
+
+/*Cria um card de meta*/
+.meta-card {
+  background: var(--text-muted); 
+  border: 1px solid var(--silver);
+  border-radius: 14px; 
+  padding: 20px 22px;
+  transition: border-color 0.2s;
+}
+
+/*Faz o card de meta reagir ao mouse com um destaque dourado*/
+.meta-card:hover { 
+  border-color: var(--dark3); 
+}
+
+/*Cabeçalho interno de cada card de meta*/
+.meta-card-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: flex-start; 
+  margin-bottom: 14px; 
+}
+
+/*Cria um cabeçalho de card bem organizado*/
+.meta-card-title { 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+}
+
+/*Estiliza o ícone dentro do card de meta*/
+.meta-icon {
+  width: 42px; 
+  height: 42px; 
+  border-radius: 10px;
+  background: rgba(197,155,39,0.12); 
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  color: var(--gold-light); 
+  font-size: 30px; 
+  flex-shrink: 0;   /* Impede que o ícone diminua dentro do flex */
+
+}
+
+/*Estiliza o nome da meta dentro do card,*/
+.meta-name { 
+  font-size: 22px; 
+  font-weight: 800; 
+  color: var(--silver);
+}
+
+/*Texto de prazo da meta*/
+.meta-prazo { 
+  font-size: 16px; 
+  color: var(--silver-dark); 
+  margin-top: 2px; }
+
+/*Estiliza a área de ações do card de meta*/
+.meta-actions { 
+  display: flex; 
+  gap: 8px; 
+}
+
+/*Estiliza os botões de ação dentro das metas*/
+.meta-btn {
+  width: 32px; 
+  height: 32px; 
+  border-radius: 8px;
+  border: 1px solid var(--dark4);
+  background: var(--dark3);
+  color: var(--text-muted); 
+  font-size: 20px; 
+  cursor: pointer;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+/*Define o efeito de hover da ação "editar" das metas*/
+.meta-btn:hover { 
+  border-color: var(--gold); 
+  color: var(--gold); 
+}
+
+/*Define o efeito de hover da ação "excluir" das metas*/
+.meta-btn.delete:hover { 
+  border-color: var(--red); 
+  color: var(--red); 
+}
+
+/*Organiza a área de valores*/
+.meta-valores { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: baseline; 
+  margin-bottom: 10px; 
+}
+
+/*Estiliza o valor atual da meta*/
+.meta-atual { 
+  font-size: 25px;
+  font-weight: 700; 
+  color: var(--gold-light); 
+  font-family: 'Playfair Display', serif; 
+}
+
+/*Estiliza o valor total da meta*/
+.meta-total { 
+  font-size: 20px;
+  color: var(--silver-dark); 
+}
+
+/*Estiliza o valor da porcentagem da meta*/
+.meta-pct {
+  font-size: 16px; 
+  font-weight: 700; 
+  color: var(--silver); 
+}
+
+/*Cria a estrutura/base da barra de progresso.*/
+.progress-bar { 
+  height: 8px; 
+  background: var(--dark4); 
+  border-radius: 100px; 
+  overflow: hidden; 
+}
+
+/*Estiliza a parte preenchida da barra de progresso*/
+.progress-fill { 
+  height: 100%; 
+  background: linear-gradient(90deg, var(--gold-light), var(--gold), var(--yellow)); 
+  border-radius: 99px; 
+  transition: width 0.6s ease; 
+}
+
+/*Estiliza a parte preenchida da barra de concluido*/
+.meta-concluida .progress-fill { 
+  background: var(--green); 
+}
+
+/*Estiliza um badge (etiqueta/status)*/
+.meta-badge {
+  display: inline-flex;
+  align-items: center; 
+  gap: 4px;
+  padding: 3px 10px; 
+  border-radius: 99px;
+  font-size: 16px; 
+  font-weight: 700; 
+  margin-top: 10px;
+}
+
+/*Definem as cores dos badges/status das metas*/
+.badge-andamento { 
+  background: rgba(197,155,39,0.12); 
+  color: var(--yellow); 
+}
+.badge-concluida { 
+  background: rgba(76,175,80,0.12);
+  color: var(--green); 
+}
+.badge-atrasada  { 
+  background: rgba(226,75,74,0.12);  
+  color: var(--red); 
+}
+
+/* ===== MODAL ===== */
+/*cria o fundo escuro do modal (overlay)*/
+.modal-overlay {
+  display: none; 
+  position: fixed; 
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 100;
+  align-items: center; 
+  justify-content: center;
+}
+
+/*Faz o modal aparecer na tela*/
+.modal-overlay.open { 
+  display: flex; 
+}
+
+/*Estiliza a caixa principal do modal/popup.*/
+.modal {
+  background: var(--dark2); 
+  border: 1px solid var(--dark4);
+  border-radius: 18px; 
+  padding: 30px;
+  width: 440px; 
+  max-width: 95vw;
+  animation: modalIn 0.2s ease;
+}
+
+/*Cria a animação de entrada do modal.*/
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0); }
+}
+
+/*Estiliza o título do modal/popup.*/
+.modal-title {
+  font-family: 'Playfair Display', serif; 
+  font-size: 25px;
+  color: var(--silver); 
+  margin-bottom: 22px;
+  display: flex; 
+  align-items: center; 
+  gap: 10px;
+}
+
+/*Cria um título elegante para o modal*/
+.modal-title i {
+  color: var(--gold-light);
+  font-size: 24px; 
+}
+
+/*Estiliza os grupos de campos de formulário*/
+.form-group { 
+  margin-bottom: 18px; 
+}
+/*Estiliza os rótulos (labels) dos campos do formulário*/
+.form-label { 
+  display: block; 
+  font-size: 14px; 
+  font-weight: 700; 
+  letter-spacing: 1.5px; 
+  color: var(--text-muted); 
+  text-transform: uppercase; 
+  margin-bottom: 8px; 
+}
+/*Estiliza os campos de formulário*/
+.form-input, .form-select {
+  width: 100%; 
+  padding: 10px 14px;
+  background: var(--dark3);
+  border: 1px solid var(--dark4);
+  border-radius: 8px; 
+  color: var(--silver); 
+  font-size: 14px;
+  font-family: 'Barlow', sans-serif; 
+  outline: none;
+  transition: border-color 0.2s;
+}
+/*Destaca o campo ativo com borda*/
+.form-input:focus, .form-select:focus { 
+  border-color: var(--gold-light); 
+}
+/*Controla o estilo das opções*/
+.form-select option { 
+  background: var(--dark3); 
+}
+/*oOrganiza campos de formulário na mesma linha*/
+.form-row { 
+  display: flex; 
+  gap: 14px; 
+}
+/*Faz os campos da linha ficarem uniformes e equilibrados*/
+.form-row .form-group { 
+  flex: 1; 
+}
+
+/*Organiza os botões do modal no canto direito*/
+.modal-actions { 
+  display: flex; 
+  gap: 12px; 
+  margin-top: 24px; 
+  justify-content: flex-end; 
+}
+
+/*Batão cancelar model*/
+.btn-cancel {
+  background: var(--dark3);
+  color: var(--silver-dark);
+  border: 1px solid var(--dark4);
+  padding: 10px 22px;
+  border-radius: 10px; 
+  font-weight: 700; 
+  font-size: 14px;
+  font-family: 'Barlow', sans-serif; 
+  cursor: pointer;
+  transition: background 0.2s;
+}
+/*Efeito de hover do botão de cancelar*/
+.btn-cancel:hover { 
+  background: var(--dark4); 
+}
+
+/* ===== GRAFICOS ===== */
+/*Organiza os gráficos em uma grade responsiva*/
+.graficos-grid { 
+  display: grid; 
+  grid-template-columns: 
+  repeat(auto-fit, minmax(340px, 1fr)); /* Colunas responsivas */
+  gap: 20px; 
+}
+
+/*Estiliza cada card que contém um gráfico*/
+.grafico-card {
+  background: var(--dark4); 
+  border: 1px solid var(--dark2);
+  border-radius: 14px; 
+  padding: 20px; 
+  transition: border-color 0.2s;
+}
+/*Estiliza o cabeçalho do card de gráfico*/
+.grafico-card-header { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  margin-bottom: 16px; 
+}
+
+/*Estiliza o título dentro do card de gráfico*/
+.grafico-card-title { 
+  font-size: 16px; 
+  font-weight: 700; 
+  color: var(--silver);
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+}
+
+/*Estiliza o ícone dentro do título do card de gráfico*/
+.grafico-card-title i { 
+  color: var(--gold-light); 
+  font-size: 20px; 
+}
+
+/*Batão "excluir" do gráfico*/
+.grafico-del-btn {
+  width: 30px; 
+  height: 30px; 
+  border-radius: 7px;
+  border: 1px solid var(--dark4); 
+  background: var(--dark3);
+  color: var(--text-muted); 
+  font-size: 20px; 
+  cursor: pointer;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+/*Define o efeito do botão de excluir gráfico*/
+.grafico-del-btn:hover { 
+  border-color: var(--red); 
+  color: var(--red); 
+}
+
+/*Define o espaço onde o gráfico (chart)*/
+.chart-container { 
+  position: relative; 
+  height: 200px; 
+}
+
+/*Organiza os tipos de gráfico ou filtros de visualização*/
+.grafico-tipos { 
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr);  /* Cria 3 colunas iguais */
+  gap: 10px; margin-bottom: 4px; 
+}
+
+/*Estiliza os botões de tipo de gráfico*/
+.tipo-btn {
+  padding: 12px 8px; 
+  border-radius: 10px;
+  border: 1.5px solid var(--dark4); 
+  background: var(--dark3);
+  color: var(--silver-dark);
+  font-size: 13px; font-weight: 700;
+  font-family: 'Barlow', sans-serif; 
+  cursor: pointer;
+  display: flex; flex-direction: column; 
+  align-items: center; gap: 6px;
+  transition: all 0.15s;
+}
+
+/*Define o tamanho do ícone dentro dos botões*/
+.tipo-btn i { 
+  font-size: 25px; 
+}
+/*Define o efeito visual dos botões de tipo de gráfico*/
+.tipo-btn:hover, .tipo-btn.selected { 
+  border-color: var(--gold-light); 
+  color: var(--gold-light); 
+  background: rgba(197,155,39,0.08); 
+}
+
+/* ===== TOAST ===== */
+/* Notificação toast */
+.toast {
+  position: fixed; 
+  bottom: 24px; 
+  right: 24px;
+  background: var(--navy); 
+  color: var(--gold-light);
+  border: 1px solid var(--gold-light); 
+  border-radius: 10px;
+  padding: 11px 22px; 
+  font-size: 14px; 
+  font-weight: 700;
+  opacity: 0; 
+  transform: translateY(10px);   /* Movimento inicial */
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;   /* Impede clique */
+  z-index: 999;
+  display: flex; 
+  align-items: center; 
+  gap: 8px;
+}
+/* Toast visível */
+.toast.show { 
+  opacity: 1;   /* Torna visível */
+  transform: translateY(0); 
+}
